@@ -45,6 +45,7 @@ struct ContentView: View {
                 await fetchRouteStations(client: client)
                 await fetchNearestCity(client: client)
                 await fetchCarrierInfo(client: client)
+                await fetchAllStations(client: client)
             }
             catch {
                 logger.error("[ContentView.testServices] Failed to get server URL. Error - \(error)")
@@ -142,6 +143,18 @@ struct ContentView: View {
             logger.info("Carrier info: \(carrierInfo)")
         } catch {
             logger.error("[ContentView.fetchCarrierInfo] Failed to get carrier info. Error - \(error)")
+        }
+    }
+    
+    private func fetchAllStations(client: Client) async {
+        let stationsService = StationsService(client: client)
+        
+        do {
+            let stations = try await stationsService.getAllStations()
+    
+            logger.info("All stations: \(stations)")
+        } catch {
+            logger.error("[ContentView.fetchAllStations] Failed to get stations. Error - \(error)")
         }
     }
 }

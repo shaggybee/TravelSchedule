@@ -22,5 +22,4 @@ final class CarrierService: CarrierServiceProtocol {
   
         return try response.ok.body.json
     }
-    
 }
