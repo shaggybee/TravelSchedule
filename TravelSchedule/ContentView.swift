@@ -43,6 +43,7 @@ struct ContentView: View {
                 await fetchScheduleBetweenStations(client: client)
                 await fetchStationSchedule(client: client)
                 await fetchRouteStations(client: client)
+                await fetchNearestCity(client: client)
             }
             catch {
                 logger.error("[ContentView.testServices] Failed to get server URL. Error - \(error)")
@@ -114,6 +115,20 @@ struct ContentView: View {
             logger.info("Route stations: \(routeStations)")
         } catch {
             logger.error("[ContentView.fetchRouteStations] Failed to get route stations. Error - \(error)")
+        }
+    }
+    
+    private func fetchNearestCity(client: Client) async {
+        let nearestCityService = NearestCityService(client: client)
+        
+        do {
+            let nearestCity = try await nearestCityService.getNearestCity(
+                lat: 47.293393,
+                lng: 38.932671)
+    
+            logger.info("Nearest city: \(nearestCity)")
+        } catch {
+            logger.error("[ContentView.fetchNearestCity] Failed to get rnearest city. Error - \(error)")
         }
     }
 }
