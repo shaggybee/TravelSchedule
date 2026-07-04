@@ -151,8 +151,17 @@ struct ContentView: View {
         
         do {
             let stations = try await stationsService.getAllStations()
+            
+            guard let countryOfRussia = stations.countries?.first(where: { $0.title == "Россия" }),
+                  let regionsOfRussia = countryOfRussia.regions else {
+                return
+            }
+            
+            let countOfRussianStations = regionsOfRussia.reduce(0) { partialResult, region in
+                partialResult + (region.settlements?.count ?? 0)
+            }
     
-            logger.info("All stations: \(stations)")
+            logger.info("Number of Russian stations: \(countOfRussianStations)")
         } catch {
             logger.error("[ContentView.fetchAllStations] Failed to get stations. Error - \(error)")
         }
