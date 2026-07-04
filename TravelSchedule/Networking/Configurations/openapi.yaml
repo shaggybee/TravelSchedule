@@ -327,7 +327,7 @@ paths:
           description: Код перевозчика
           required: true
           schema:
-            type: string
+            type: integer
         - name: system
           in: query
           description: Система кодирования (yandex, iata, sirena, express, esr)
@@ -802,6 +802,8 @@ components:
     CarrierResponse:
       type: object
       properties:
+        carrier:
+          $ref: '#/components/schemas/Carrier'
         carriers:
           type: array
           items:

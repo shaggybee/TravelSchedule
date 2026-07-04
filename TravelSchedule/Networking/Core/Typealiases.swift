@@ -11,3 +11,4 @@ typealias SegmentsSchedule = Components.Schemas.Segments
 typealias StationSchedule = Components.Schemas.ScheduleResponse
 typealias RouteStations = Components.Schemas.ThreadStationsResponse
 typealias NearestCity = Components.Schemas.NearestCityResponse
+typealias CarrierWrapper = Components.Schemas.CarrierResponse
