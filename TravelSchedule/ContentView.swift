@@ -39,6 +39,7 @@ struct ContentView: View {
                     middlewares: [AuthenticationMiddleware(apiKey: NetworkingConstants.apiKey)])
                 
                 await fetchNearestStations(client: client)
+                await fetchCopyright(client: client)
             }
             catch {
                 logger.error("[ContentView.testServices] Failed to get server URL. Error - \(error)")
@@ -59,6 +60,18 @@ struct ContentView: View {
             logger.info("List of nearest stations: \(stations)")
         } catch {
             logger.error("[ContentView.fetchNearestStations] Failed to get list of nearest stations. Error - \(error)")
+        }
+    }
+    
+    private func fetchCopyright(client: Client) async {
+        let copyrightService = CopyrightService(client: client)
+        
+        do {
+            let copyright = try await copyrightService.getCopyright()
+            
+            logger.info("Copyright: \(copyright)")
+        } catch {
+            logger.error("[ContentView.fetchCopyright] Failed to get copyright info. Error - \(error)")
         }
     }
 }

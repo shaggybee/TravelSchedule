@@ -6,3 +6,4 @@
 //
 
 typealias NearestStations = Components.Schemas.Stations
+typealias CopyrightWrapper = Components.Schemas.CopyrightResponse
