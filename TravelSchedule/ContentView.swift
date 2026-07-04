@@ -40,6 +40,7 @@ struct ContentView: View {
                 
                 await fetchNearestStations(client: client)
                 await fetchCopyright(client: client)
+                await fetchScheduleBetweenStations(client: client)
             }
             catch {
                 logger.error("[ContentView.testServices] Failed to get server URL. Error - \(error)")
@@ -72,6 +73,21 @@ struct ContentView: View {
             logger.info("Copyright: \(copyright)")
         } catch {
             logger.error("[ContentView.fetchCopyright] Failed to get copyright info. Error - \(error)")
+        }
+    }
+    
+    private func fetchScheduleBetweenStations(client: Client) async {
+        let scheduleBetweenStationsService = ScheduleBetweenStationsService(client: client)
+        
+        do {
+            let scheduleBetweenStations = try await scheduleBetweenStationsService.getScheduleBetweenStations(
+                from: "s9612913",
+                to: "s9613073",
+            )
+            
+            logger.info("Schedule between stations: \(scheduleBetweenStations)")
+        } catch {
+            logger.error("[ContentView.fetchScheduleBetweenStations] Failed to get schedule between stations. Error - \(error)")
         }
     }
 }

@@ -7,3 +7,4 @@
 
 typealias NearestStations = Components.Schemas.Stations
 typealias CopyrightWrapper = Components.Schemas.CopyrightResponse
+typealias Segments = Components.Schemas.Segments
