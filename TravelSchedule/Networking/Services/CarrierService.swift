@@ -8,14 +8,7 @@
 import OpenAPIRuntime
 import OpenAPIURLSession
 
-final class CarrierService: CarrierServiceProtocol {
-    // MARK: - Private properties
-    private let client: Client
-    
-    init(client: Client) {
-        self.client = client
-    }
-    
+final class CarrierService: ApiServiceBase, CarrierServiceProtocol {
     // MARK: - Public Methods
     func getCarrierInfo(by code: Int) async throws -> CarrierWrapper {
         let response = try await client.getCarrierInfo(query: .init(code: code))

@@ -8,14 +8,7 @@
 import OpenAPIRuntime
 import OpenAPIURLSession
 
-final class NearestCityService: NearestCityServiceProtocol {
-    // MARK: - Private properties
-    private let client: Client
-    
-    init(client: Client) {
-        self.client = client
-    }
-    
+final class NearestCityService: ApiServiceBase, NearestCityServiceProtocol {
     // MARK: - Public Methods
     func getNearestCity(lat: Double, lng: Double, distance: Int? = nil) async throws -> NearestCity {
         let response = try await client.getNearestCity(query: .init(

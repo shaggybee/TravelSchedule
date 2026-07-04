@@ -8,14 +8,7 @@
 import OpenAPIRuntime
 import OpenAPIURLSession
 
-final class StationScheduleService: StationScheduleProtocol {
-    // MARK: - Private properties
-    private let client: Client
-    
-    init(client: Client) {
-        self.client = client
-    }
-    
+final class StationScheduleService: ApiServiceBase, StationScheduleProtocol {
     // MARK: - Public Methods
     func getSchedule(for station: String, at date: String? = nil) async throws -> StationSchedule {
         let response = try await client.getStationSchedule(query: .init(

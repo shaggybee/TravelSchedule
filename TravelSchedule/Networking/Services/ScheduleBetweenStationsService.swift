@@ -8,14 +8,7 @@
 import OpenAPIRuntime
 import OpenAPIURLSession
 
-final class ScheduleBetweenStationsService: ScheduleBetweenStationsServiceProtocol {
-    // MARK: - Private properties
-    private let client: Client
-    
-    init(client: Client) {
-        self.client = client
-    }
-    
+final class ScheduleBetweenStationsService: ApiServiceBase, ScheduleBetweenStationsServiceProtocol {
     // MARK: - Public Methods
     func getScheduleBetweenStations(from: String, to: String, date: String? = nil) async throws -> SegmentsSchedule {
         let response = try await client.getScheduleBetweenStations(query: .init(

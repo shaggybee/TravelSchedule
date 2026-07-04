@@ -8,14 +8,7 @@
 import OpenAPIRuntime
 import OpenAPIURLSession
 
-final class CopyrightService: CopyrightServiceProtocol {
-    // MARK: - Private properties
-    private let client: Client
-    
-    init(client: Client) {
-        self.client = client
-    }
-    
+final class CopyrightService: ApiServiceBase, CopyrightServiceProtocol {
     // MARK: - Public Methods
     func getCopyright() async throws -> CopyrightWrapper {
         let response = try await client.getCopyright()

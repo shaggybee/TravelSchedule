@@ -10,13 +10,16 @@ import OpenAPIRuntime
 import HTTPTypes
 
 struct AuthenticationMiddleware {
+    // MARK: - Private properties
     private let apiKey: String
     
+    // MARK: - Initializers
     init(apiKey: String) {
          self.apiKey = apiKey
      }
 }
 
+// MARK: - ClientMiddleware
 extension AuthenticationMiddleware: ClientMiddleware {
     func intercept(
         _ request: HTTPTypes.HTTPRequest,

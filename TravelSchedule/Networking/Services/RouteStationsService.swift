@@ -8,14 +8,7 @@
 import OpenAPIRuntime
 import OpenAPIURLSession
 
-final class RouteStationsService: RouteStationsServiceProtocol {
-    // MARK: - Private properties
-    private let client: Client
-    
-    init(client: Client) {
-        self.client = client
-    }
-    
+final class RouteStationsService: ApiServiceBase, RouteStationsServiceProtocol {
     // MARK: - Public Methods
     func getRouteStations(for uid: String, at date: String? = nil) async throws -> RouteStations {
         let response = try await client.getRouteStations(query: .init(

@@ -9,14 +9,9 @@ import Foundation
 import OpenAPIRuntime
 import OpenAPIURLSession
 
-final class StationsService: StationsServiceProtocol {
+final class StationsService: ApiServiceBase, StationsServiceProtocol {
     // MARK: - Private properties
-    private let client: Client
     private lazy var decoder = JSONDecoder()
-    
-    init(client: Client) {
-        self.client = client
-    }
     
     // MARK: - Public Methods
     func getAllStations() async throws -> AllStations {
