@@ -7,5 +7,7 @@
 
 typealias NearestStations = Components.Schemas.Stations
 typealias CopyrightWrapper = Components.Schemas.CopyrightResponse
-typealias Segments = Components.Schemas.Segments
+typealias SegmentsSchedule = Components.Schemas.Segments
 typealias StationSchedule = Components.Schemas.ScheduleResponse
+typealias RouteStations = Components.Schemas.ThreadStationsResponse
+

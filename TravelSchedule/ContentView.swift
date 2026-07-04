@@ -42,6 +42,7 @@ struct ContentView: View {
                 await fetchCopyright(client: client)
                 await fetchScheduleBetweenStations(client: client)
                 await fetchStationSchedule(client: client)
+                await fetchRouteStations(client: client)
             }
             catch {
                 logger.error("[ContentView.testServices] Failed to get server URL. Error - \(error)")
@@ -101,6 +102,18 @@ struct ContentView: View {
             logger.info("Station schedule: \(shedule)")
         } catch {
             logger.error("[ContentView.fetchStationSchedule] Failed to get station schedule. Error - \(error)")
+        }
+    }
+    
+    private func fetchRouteStations(client: Client) async {
+        let routeStationsService = RouteStationsService(client: client)
+        
+        do {
+            let routeStations = try await routeStationsService.getRouteStations(for: "251A_0_2")
+            
+            logger.info("Route stations: \(routeStations)")
+        } catch {
+            logger.error("[ContentView.fetchRouteStations] Failed to get route stations. Error - \(error)")
         }
     }
 }

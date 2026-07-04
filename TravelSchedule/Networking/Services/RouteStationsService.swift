@@ -1,5 +1,5 @@
 //
-//  ScheduleBetweenStationsService.swift
+//  RouteStationsService.swift
 //  TravelSchedule
 //
 //  Created by Kislov Vadim on 04.07.2026.
@@ -8,7 +8,7 @@
 import OpenAPIRuntime
 import OpenAPIURLSession
 
-final class ScheduleBetweenStationsService: ScheduleBetweenStationsServiceProtocol {
+final class RouteStationsService: RouteStationsServiceProtocol {
     // MARK: - Private properties
     private let client: Client
     
@@ -17,12 +17,12 @@ final class ScheduleBetweenStationsService: ScheduleBetweenStationsServiceProtoc
     }
     
     // MARK: - Public Methods
-    func getScheduleBetweenStations(from: String, to: String, date: String? = nil) async throws -> SegmentsSchedule {
-        let response = try await client.getScheduleBetweenStations(query: .init(
-            from: from,
-            to: to,
+    func getRouteStations(for uid: String, at date: String? = nil) async throws -> RouteStations {
+        let response = try await client.getRouteStations(query: .init(
+            uid: uid,
             date: date
         ))
+        
         return try response.ok.body.json
     }
 }
