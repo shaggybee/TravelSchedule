@@ -1,0 +1,62 @@
+//
+//  StationSelectionView.swift
+//  TravelSchedule
+//
+//  Created by Kislov Vadim on 25.07.2026.
+//
+
+import SwiftUI
+
+struct StationSelectionView: View {
+    @StateObject private var viewModel: StationSelectionViewModel
+    
+    @FocusState private var isSearchFocused: Bool
+    
+    let onStationSelected: (Handler<Station>)
+    
+    init(
+        stations: [Station],
+        onStationSelected: @escaping (Handler<Station>)
+    ) {
+        _viewModel = StateObject(wrappedValue: StationSelectionViewModel(stations: stations))
+        
+        self.onStationSelected = onStationSelected
+    }
+    
+    var body: some View {
+        VStack(spacing: AppSpacing.space16) {
+            SearchField(
+                text: $viewModel.search,
+                isFocused: $isSearchFocused
+            )
+            
+            if viewModel.isStationsEmpty {
+                EmptyStateView(text: "Станция не найдена")
+            } else {
+                content
+                    .onTapGesture {
+                        isSearchFocused = false
+                    }
+            }
+        }
+        .padding(.horizontal, AppSpacing.space16)
+    }
+    
+    private var content: some View {
+        ScrollView (showsIndicators: false) {
+            LazyVStack(spacing: 0) {
+                ForEach(viewModel.filteredStations, id: \.hashValue) { station in
+                    ListRowView(title: station.title ?? "") {
+                        onStationSelected(station)
+                    }
+                    .frame(height: 60)
+                }
+            }
+        }
+    }
+}
+
+#Preview {
+    StationSelectionView(
+        stations: []) { _ in }
+}
