@@ -9,10 +9,15 @@ import Foundation
 import Combine
 
 final class RouteSearchViewModel: ObservableObject {
-    
+    // MARK: - Public properties
     @Published var departureStation: Station?
     @Published var arrivalStation: Station?
     
+    var isSearchScheduleAvailable: Bool {
+        departureStation != nil && arrivalStation != nil
+    }
+    
+    // MARK: - Public methods
     func setSelected(station: Station, for type: RoutePointType) {
         switch type {
         case .departure:

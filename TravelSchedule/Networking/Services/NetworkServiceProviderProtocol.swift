@@ -9,4 +9,5 @@ import Foundation
 
 protocol NetworkServiceProviderProtocol {
     var stationsService: StationsServiceProtocol { get }
+    var scheduleService: ScheduleBetweenStationsServiceProtocol { get }
 }

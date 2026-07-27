@@ -475,6 +475,25 @@ components:
         duration:
           type: integer
           description: Длительность рейса в секундах
+        start_date:
+          type: string
+        has_transfers:
+            type: boolean
+        transfers:
+            type: array
+            items:
+              $ref: '#/components/schemas/Transfers'
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              thread:
+                $ref: '#/components/schemas/Thread'
+              duration:
+                type: integer
+              start_date:
+                type: string
     Pagination:
       type: object
       properties:
@@ -863,4 +882,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Station'
-
+    Transfers:
+        type: object
+        properties:
+          type:
+            type: string
+          title:
+            type: string
+          short_title:
+            type: string
+          popular_title:
+            type: string
+          code:
+            type: string

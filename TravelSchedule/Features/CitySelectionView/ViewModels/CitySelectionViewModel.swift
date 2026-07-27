@@ -38,6 +38,7 @@ final class CitySelectionViewModel: ObservableObject {
         self.networkServiceProvider = networkServiceProvider
     }
     
+    // MARK: - Public methods
     func fetchCities() {
         viewState = .loading
     

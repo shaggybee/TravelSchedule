@@ -10,27 +10,28 @@ import Combine
 
 struct CitySelectionView: View {
     @StateObject private var viewModel: CitySelectionViewModel
-    
     @FocusState private var isSearchFocused: Bool
     
     private let onCitySelected: Handler<Settlement>
     
     init(
-        networkServiceProvider: NetworkServiceProviderProtocol,
+        viewModel: CitySelectionViewModel,
         onCitySelected: @escaping Handler<Settlement>
     ) {
-        _viewModel = StateObject(
-            wrappedValue: CitySelectionViewModel(networkServiceProvider: networkServiceProvider)
-        )
+        _viewModel = StateObject(wrappedValue: viewModel)
 
         self.onCitySelected = onCitySelected
+        
+        viewModel.fetchCities()
     }
     
     var body: some View {
         Group {
             switch viewModel.viewState {
-            case .loading:
+            case .idle, .loading:
                 LoadingView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(.ypWhite)
             case .loaded:
                 VStack(spacing: AppSpacing.space16) {
                     SearchField(
@@ -45,19 +46,15 @@ struct CitySelectionView: View {
                     }
                 }
                 .padding(.horizontal, AppSpacing.space16)
+                .background(.ypWhite)
                 .onTapGesture {
                     isSearchFocused = false
                 }
             case .error(let error):
                 ErrorStateView(error: error)
-            default:
-                VStack {
-                    
-                }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(.ypWhite)
             }
-        }
-        .onAppear {
-            viewModel.fetchCities()
         }
     }
     
@@ -68,14 +65,22 @@ struct CitySelectionView: View {
                     ListRowView(title: settlement.title ?? "") {
                         onCitySelected(settlement)
                     }
-                    .frame(height: 60)
+                    .frame(height: Constants.listRowViewHeight)
                 }
             }
         }
     }
 }
 
+// MARK: - Constants
+private extension CitySelectionView {
+    enum Constants {
+        static let listRowViewHeight: Double = 60
+    }
+}
+
 #Preview {
-    CitySelectionView(
-        networkServiceProvider: MockNetworkServiceProvider()) { _ in }
+    let viewModel = CitySelectionViewModel(networkServiceProvider: MockNetworkServiceProvider())
+    
+    CitySelectionView(viewModel: viewModel) { _ in }
 }

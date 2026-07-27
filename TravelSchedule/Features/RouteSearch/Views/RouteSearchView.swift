@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct RouteSearchView: View {
-    
     let networkServiceProvider: NetworkServiceProviderProtocol
     
     @StateObject private var viewModel = RouteSearchViewModel()
@@ -16,7 +15,7 @@ struct RouteSearchView: View {
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
-            VStack {
+            VStack(spacing: AppSpacing.space16) {
                 RoutePointSelectionView(
                     departureStationName: viewModel.departureStation?.title,
                     arrivalStationName: viewModel.arrivalStation?.title,
@@ -27,23 +26,43 @@ struct RouteSearchView: View {
                     viewModel.swapPoints()
                 }
                 
+                if viewModel.isSearchScheduleAvailable{
+                    searchButton
+                }
+                
                 Spacer()
             }
             .navigationDestination(for: RouteSearchPath.self) { path in
                 switch path {
                 case let .citySelection(type):
-                    CitySelectionView(networkServiceProvider: networkServiceProvider) { city in
+                    let citySelectionViewModel = CitySelectionViewModel(networkServiceProvider: networkServiceProvider)
+                    
+                    CitySelectionView(viewModel: citySelectionViewModel) { city in
                         let filteredStations = viewModel.filterStations(city.stations ?? [])
                         
                         navigationPath.append(RouteSearchPath.stationSelection(type, filteredStations))
                     }
                     .toolbar(.hidden, for: .tabBar)
+                    .navigationTitle("Выбор города")
                 case let .stationSelection(type, stations):
                     StationSelectionView(stations: stations, onStationSelected: {
                         viewModel.setSelected(station: $0, for: type)
                         
                         navigationPath.removeLast(navigationPath.count)
                     })
+                    .toolbar(.hidden, for: .tabBar)
+                    .navigationTitle("Выбор станции")
+                case let .shedule(departureStation, arrivalStation):
+                    let scheduleViewModel = ScheduleViewModel(
+                        departureStation: departureStation,
+                        arrivalStation: arrivalStation,
+                        networkServiceProvider: networkServiceProvider
+                    )
+                    
+                    ScheduleView(
+                        viewModel: scheduleViewModel,
+                        navigationPath: $navigationPath
+                    )
                     .toolbar(.hidden, for: .tabBar)
                 }
             }
@@ -54,6 +73,30 @@ struct RouteSearchView: View {
                 trailing: AppSpacing.space16))
             .background(.ypWhite)
         }
+    }
+    
+    var searchButton: some View {
+        Button {
+            guard let arrivalStation = viewModel.arrivalStation, let departureStation = viewModel.departureStation else {
+                return
+            }
+            
+            navigationPath.append(RouteSearchPath.shedule(
+                departureStation: departureStation,
+                arrivalStation: arrivalStation)
+            )
+        } label: {
+            Text("Найти")
+                .font(AppFont.bold17)
+                .foregroundStyle(.white)
+                .frame(width: 150, height: 60)
+                .background(
+                    RoundedRectangle(cornerRadius: AppRadius.size16)
+                        .fill(.ypBlue)
+                )
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
     }
 }
 

@@ -15,3 +15,5 @@ typealias CarrierWrapper = Components.Schemas.CarrierResponse
 typealias AllStations = Components.Schemas.AllStationsResponse
 typealias Settlement = Components.Schemas.Settlement
 typealias Station = Components.Schemas.Station
+typealias Segment = Components.Schemas.Segment
+typealias Thread = Components.Schemas.Thread

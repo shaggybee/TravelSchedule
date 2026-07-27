@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SearchField: View {
     @Binding var text: String
-    
     @FocusState.Binding var isFocused: Bool
     
     var body: some View {

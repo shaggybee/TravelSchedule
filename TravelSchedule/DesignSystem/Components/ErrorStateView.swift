@@ -17,6 +17,7 @@ struct ErrorStateView: View {
             text
                 .font(AppFont.bold24)
         }
+        .background(.ypWhite)
     }
     
     private var image: some View {

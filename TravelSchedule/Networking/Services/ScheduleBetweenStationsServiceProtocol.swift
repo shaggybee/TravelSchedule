@@ -6,5 +6,5 @@
 //
 
 protocol ScheduleBetweenStationsServiceProtocol {
-    func getScheduleBetweenStations(from: String, to: String, date: String?) async throws -> SegmentsSchedule
+    func getScheduleBetweenStations(from: String, to: String, date: String?) async throws -> [Trip]
 }

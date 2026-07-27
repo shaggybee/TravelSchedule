@@ -24,13 +24,20 @@ struct ListRowView: View {
 
                 Image(systemName: "chevron.right")
                     .foregroundStyle(.ypBlack)
-                    .frame(width: 24, height: 24)
+                    .frame(width: Constants.imageSize, height: Constants.imageSize)
             }
             .frame(maxWidth: .infinity)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .background(.ypWhite)
+    }
+}
+
+// MARK: - Constants
+private extension ListRowView {
+    enum Constants {
+        static let imageSize: Double = 24
     }
 }
 

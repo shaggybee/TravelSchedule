@@ -10,7 +10,6 @@ import OpenAPIRuntime
 import OpenAPIURLSession
 
 final class AppAssembly {
-    
     // MARK: Public methods
     func makeNetworkServiceProvider() throws -> NetworkServiceProviderProtocol {
         let serverUrl = try Servers.Server1.url()

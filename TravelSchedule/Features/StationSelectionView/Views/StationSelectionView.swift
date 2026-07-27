@@ -9,10 +9,9 @@ import SwiftUI
 
 struct StationSelectionView: View {
     @StateObject private var viewModel: StationSelectionViewModel
-    
     @FocusState private var isSearchFocused: Bool
     
-    let onStationSelected: (Handler<Station>)
+    private let onStationSelected: (Handler<Station>)
     
     init(
         stations: [Station],
@@ -29,6 +28,7 @@ struct StationSelectionView: View {
                 text: $viewModel.search,
                 isFocused: $isSearchFocused
             )
+            .background(.ypWhite)
             
             if viewModel.isStationsEmpty {
                 EmptyStateView(text: "Станция не найдена")
@@ -40,6 +40,7 @@ struct StationSelectionView: View {
             }
         }
         .padding(.horizontal, AppSpacing.space16)
+        .background(.ypWhite)
     }
     
     private var content: some View {

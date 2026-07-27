@@ -36,7 +36,7 @@ struct RoutePointSelectionView: View {
             } label: {
                 Image(.swap)
             }
-            .frame(width: 36, height: 36)
+            .frame(width: Constants.buttonSwapSize, height: Constants.buttonSwapSize)
             .background(
                 Circle()
                     .fill(.white)
@@ -58,7 +58,7 @@ struct RoutePointSelectionView: View {
         Button(action: action) {
             Text(title ?? placeholder)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .frame(height: 48)
+                .frame(height: Constants.routePointButtonHeight)
                 .padding(.horizontal, AppSpacing.space16)
                 .font(AppFont.regular17)
                 .foregroundStyle(
@@ -71,6 +71,14 @@ struct RoutePointSelectionView: View {
                 .background(.white)
         }
         .buttonStyle(.plain)
+    }
+}
+
+// MARK: - Constants
+private extension RoutePointSelectionView {
+    enum Constants {
+        static let buttonSwapSize: Double = 36
+        static let routePointButtonHeight: Double = 48
     }
 }
 
