@@ -77,7 +77,8 @@ struct RouteSearchView: View {
     
     var searchButton: some View {
         Button {
-            guard let arrivalStation = viewModel.arrivalStation, let departureStation = viewModel.departureStation else {
+            guard let arrivalStation = viewModel.arrivalStation,
+                  let departureStation = viewModel.departureStation else {
                 return
             }
             

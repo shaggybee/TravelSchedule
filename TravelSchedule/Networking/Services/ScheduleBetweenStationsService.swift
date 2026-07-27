@@ -32,16 +32,27 @@ final class ScheduleBetweenStationsService: ApiServiceBase, ScheduleBetweenStati
     
     // MARK: - Public Methods
     func getScheduleBetweenStations(from: String, to: String, date: String? = nil) async throws -> [Trip] {
-        let response = try await client.getScheduleBetweenStations(query: .init(
-            from: from,
-            to: to,
-            date: date,
-            transfers: true
-        ))
-        
-        let segmentsSchedule = try response.ok.body.json
-        
-        return transform(segments: segmentsSchedule)
+        do {
+            let response = try await client.getScheduleBetweenStations(query: .init(
+                from: from,
+                to: to,
+                date: date,
+                transfers: true
+            ))
+            
+            let segmentsSchedule = try response.ok.body.json
+            
+            return transform(segments: segmentsSchedule)
+            
+        } catch let clientError as ClientError {
+            if let urlError = clientError.underlyingError as? URLError, urlError.code == .notConnectedToInternet {
+                throw NetworkError.noInternet
+            } else {
+                throw NetworkError.apiError
+            }
+        } catch {
+            throw error
+        }
     }
     
     // MARK: - Private Methods

@@ -17,6 +17,7 @@ struct EmptyStateView: View {
                 .font(AppFont.bold24)
             Spacer()
         }
+        .frame(maxWidth: .infinity)
     }
 }
 

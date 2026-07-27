@@ -41,7 +41,7 @@ final class CitySelectionViewModel: ObservableObject {
     // MARK: - Public methods
     func fetchCities() {
         viewState = .loading
-    
+
         Task {
             do {
                 let stations = try await networkServiceProvider.stationsService.getAllStations()
@@ -55,13 +55,11 @@ final class CitySelectionViewModel: ObservableObject {
                     .flatMap { $0.settlements ?? [] }
                 
                 viewState = .loaded
-            } catch {
-                if let urlError = error as? URLError, urlError.code == .notConnectedToInternet {
-                    viewState = .error(NetworkError.noInternet)
-                } else {
-                    viewState = .error(NetworkError.apiError)
-                }
+            } catch let error as NetworkError {
+                viewState = .error(error)
                 
+                throw error
+            } catch {
                 logger.error("[CitySelectionViewModel.fetchCities] Failed to get cities. Error - \(error)")
             }
         }

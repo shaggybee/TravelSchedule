@@ -55,7 +55,9 @@ final class ScheduleViewModel: ObservableObject {
         
         Task {
             do {
-                guard let departureStationCode = departureStation.codes?.yandex_code, let arrivalStationCode = arrivalStation.codes?.yandex_code else {
+                guard let departureStationCode = departureStation.codes?.yandex_code,
+                      let arrivalStationCode = arrivalStation.codes?.yandex_code else
+                {
                     viewState = .loaded
                     
                     return
@@ -74,15 +76,14 @@ final class ScheduleViewModel: ObservableObject {
                 filteredTrips = filter(trips: trips)
                 
                 viewState = .loaded
-            } catch {
-                if let urlError = error as? URLError, urlError.code == .notConnectedToInternet {
-                    viewState = .error(NetworkError.noInternet)
-                } else {
-                    viewState = .error(NetworkError.apiError)
-                }
+            } catch let error as NetworkError {
+                viewState = .error(error)
                 
+                throw error
+            } catch {
                 logger.error("[ScheduleViewModel.fetchSchedule] Failed to get schedule. Error - \(error)")
             }
+            
         }
     }
     

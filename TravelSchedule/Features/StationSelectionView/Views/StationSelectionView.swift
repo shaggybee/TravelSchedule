@@ -34,13 +34,13 @@ struct StationSelectionView: View {
                 EmptyStateView(text: "Станция не найдена")
             } else {
                 content
-                    .onTapGesture {
-                        isSearchFocused = false
-                    }
             }
         }
         .padding(.horizontal, AppSpacing.space16)
         .background(.ypWhite)
+        .onTapGesture {
+            isSearchFocused = false
+        }
     }
     
     private var content: some View {

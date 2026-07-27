@@ -14,9 +14,14 @@ struct SearchField: View {
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
+                .foregroundStyle(text.isEmpty ? .ypGray : .ypBlack)
             
-            TextField("Введите запрос", text: $text)
+            TextField(
+                text: $text,
+                prompt: Text("Введите запрос")
+                    .foregroundStyle(.ypGray)) { }
                 .focused($isFocused)
+                .foregroundStyle(.ypBlack)
             
             if !text.isEmpty {
                 Button {
@@ -28,7 +33,7 @@ struct SearchField: View {
             }
         }
         .padding(AppSpacing.space8)
-        .background(.ypLightGray)
+        .background(.textFieldBackground)
         .clipShape(RoundedRectangle(cornerRadius: AppRadius.size10))
     }
 }

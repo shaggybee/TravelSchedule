@@ -15,12 +15,22 @@ final class StationsService: ApiServiceBase, StationsServiceProtocol {
     
     // MARK: - Public Methods
     func getAllStations() async throws -> AllStations {
-        let response = try await client.getAllStations(query: .init())
-        
-        let responseBodyHtml = try response.ok.body.html
-        let limit = 50 * 1024 * 1024
-        let fullData = try await Data(collecting: responseBodyHtml, upTo: limit)
-        
-        return try decoder.decode(AllStations.self, from: fullData)
+        do {
+            let response = try await client.getAllStations(query: .init())
+            
+            let responseBodyHtml = try response.ok.body.html
+            let limit = 50 * 1024 * 1024
+            let fullData = try await Data(collecting: responseBodyHtml, upTo: limit)
+            
+            return try decoder.decode(AllStations.self, from: fullData)
+        } catch let clientError as ClientError {
+            if let urlError = clientError.underlyingError as? URLError, urlError.code == .notConnectedToInternet {
+                throw NetworkError.noInternet
+            } else {
+                throw NetworkError.apiError
+            }
+        } catch {
+            throw error
+        }
     }
 }
