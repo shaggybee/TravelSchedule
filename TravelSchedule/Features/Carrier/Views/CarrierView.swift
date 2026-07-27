@@ -1,16 +1,16 @@
 //
-//  SettingsView.swift
+//  CarrierView.swift
 //  TravelSchedule
 //
-//  Created by Kislov Vadim on 25.07.2026.
+//  Created by Kislov Vadim on 27.07.2026.
 //
 
 import SwiftUI
 
-struct SettingsView: View {
+struct CarrierView: View {
     var body: some View {
         VStack {
-            Text("SettingsView")
+            Text("CarrierView")
         }
         .frame(maxWidth: .infinity , maxHeight: .infinity)
         .background(.ypWhite)
@@ -18,5 +18,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView()
+    CarrierView()
 }

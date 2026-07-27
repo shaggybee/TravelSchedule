@@ -96,8 +96,16 @@ struct TripCard: View {
 
         switch (days, hours) {
         case (0, _):
-            return "\(hours) ч"
-
+            
+            // TODO вынести в следующем спринте в локали
+            switch hours {
+            case 1:
+                return "\(hours) час"
+            case 2...4:
+                return "\(hours) часа"
+            default:
+                return "\(hours) часов"
+            }
         case (_, 0):
             return "\(days) д"
 

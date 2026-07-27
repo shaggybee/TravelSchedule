@@ -79,11 +79,8 @@ final class ScheduleViewModel: ObservableObject {
             } catch let error as NetworkError {
                 viewState = .error(error)
                 
-                throw error
-            } catch {
                 logger.error("[ScheduleViewModel.fetchSchedule] Failed to get schedule. Error - \(error)")
             }
-            
         }
     }
     

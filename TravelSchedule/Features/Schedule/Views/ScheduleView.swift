@@ -64,7 +64,7 @@ struct ScheduleView: View {
             LazyVStack(spacing: AppSpacing.space8) {
                 ForEach(viewModel.filteredTrips, id: \.uid) { trip in
                     TripCard(trip: trip, onTap: {
-                        //
+                        navigationPath.append(SchedulePath.carrier)
                     })
                     .frame(height: 104)
                 }
@@ -102,18 +102,22 @@ struct ScheduleView: View {
     }
     
     private func navigationDestination(path: SchedulePath) -> some View {
-        switch path {
-        case .scheduleFilters:
-            let scheduleFiltersViewModel = ScheduleFiltersViewModel(
-                filters: viewModel.scheduleFilters
-            )
-            
-            return ScheduleFiltersView(
-                viewModel: scheduleFiltersViewModel) { filters in
-                    viewModel.setFilters(filters)
-                    
-                    navigationPath.removeLast()
-                }
+        Group {
+            switch path {
+            case .scheduleFilters:
+                let scheduleFiltersViewModel = ScheduleFiltersViewModel(
+                    filters: viewModel.scheduleFilters
+                )
+                
+                ScheduleFiltersView(
+                    viewModel: scheduleFiltersViewModel) { filters in
+                        viewModel.setFilters(filters)
+                        
+                        navigationPath.removeLast()
+                    }
+            case .carrier:
+                CarrierView()
+            }
         }
     }
 }

@@ -9,4 +9,5 @@ import Foundation
 
 enum SchedulePath: Hashable {
     case scheduleFilters
+    case carrier
 }

@@ -44,6 +44,8 @@ final class CitySelectionViewModel: ObservableObject {
 
         Task {
             do {
+                // TODO в следующем спринте сделать маппер для сопутствующийх типов (settlements), чтобы не расползались по проекту
+                
                 let stations = try await networkServiceProvider.stationsService.getAllStations()
                 
                 guard let countryOfRussia = stations.countries?.first(where: { $0.title == "Россия" }),
@@ -53,6 +55,14 @@ final class CitySelectionViewModel: ObservableObject {
                 
                 settlements = regionsOfRussia
                     .flatMap { $0.settlements ?? [] }
+                    .filter { settlement in
+                        guard let title = settlement.title, !title.isEmpty else {
+                            return false
+                        }
+
+                        return !(settlement.stations ?? []).isEmpty
+                    }
+                    .sorted { ($0.title ?? "").localizedStandardCompare($1.title ?? "") == .orderedAscending }
                 
                 viewState = .loaded
             } catch let error as NetworkError {

@@ -35,11 +35,4 @@ final class RouteSearchViewModel: ObservableObject {
         departureStation = arrivalStation
         arrivalStation = temp
     }
-    
-    func filterStations(_ stations: [Station]) -> [Station] {
-        stations.filter {
-            $0.transport_type == TransportType.train.rawValue &&
-            ($0.station_type == StationType.trainStation.rawValue || $0.station_type == StationType.station.rawValue )
-        }
-    }
 }

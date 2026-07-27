@@ -38,9 +38,7 @@ struct RouteSearchView: View {
                     let citySelectionViewModel = CitySelectionViewModel(networkServiceProvider: networkServiceProvider)
                     
                     CitySelectionView(viewModel: citySelectionViewModel) { city in
-                        let filteredStations = viewModel.filterStations(city.stations ?? [])
-                        
-                        navigationPath.append(RouteSearchPath.stationSelection(type, filteredStations))
+                        navigationPath.append(RouteSearchPath.stationSelection(type, city.stations ?? []))
                     }
                     .toolbar(.hidden, for: .tabBar)
                     .navigationTitle("Выбор города")
@@ -48,7 +46,7 @@ struct RouteSearchView: View {
                     StationSelectionView(stations: stations, onStationSelected: {
                         viewModel.setSelected(station: $0, for: type)
                         
-                        navigationPath.removeLast(navigationPath.count)
+                        navigationPath = NavigationPath()
                     })
                     .toolbar(.hidden, for: .tabBar)
                     .navigationTitle("Выбор станции")
@@ -72,6 +70,7 @@ struct RouteSearchView: View {
                 bottom: 0,
                 trailing: AppSpacing.space16))
             .background(.ypWhite)
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
     
