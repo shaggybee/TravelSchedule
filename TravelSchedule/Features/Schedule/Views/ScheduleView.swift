@@ -42,8 +42,7 @@ struct ScheduleView: View {
                         content
                     }
                 }
-                .padding(.top, AppSpacing.space16)
-                .padding(.horizontal, AppSpacing.space16)
+                .padding([.top, .horizontal], AppSpacing.space16)
                 .background(.ypWhite)
                 .navigationDestination(for: SchedulePath.self) {
                     navigationDestination(path: $0)
@@ -60,7 +59,7 @@ struct ScheduleView: View {
     }
     
     private var content: some View {
-        ScrollView (showsIndicators: false) {
+        ScrollView {
             LazyVStack(spacing: AppSpacing.space8) {
                 ForEach(viewModel.filteredTrips, id: \.uid) { trip in
                     TripCard(trip: trip, onTap: {
@@ -71,6 +70,7 @@ struct ScheduleView: View {
             }
             .padding(.bottom, 92)
         }
+        .scrollIndicators(.hidden)
     }
     
     private var filterButton: some View {

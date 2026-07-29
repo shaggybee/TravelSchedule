@@ -84,8 +84,7 @@ struct ScheduleFiltersView: View {
             }
             
         }
-        .padding(.horizontal, AppSpacing.space16)
-        .padding(.top, AppSpacing.space16)
+        .padding([.top, .horizontal], AppSpacing.space16)
         .background(.ypWhite)
     }
 }

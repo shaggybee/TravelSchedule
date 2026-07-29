@@ -52,8 +52,7 @@ struct TripCard: View {
             .padding(.leading, AppSpacing.space14)
             .padding(.trailing, AppSpacing.space8)
             
-            HStack(alignment: .center, spacing: AppSpacing.space4) {
-                
+            HStack(spacing: AppSpacing.space4) {
                 Text(trip.departureTime ?? "")
                     .font(AppFont.regular17)
                     .foregroundStyle(.ypBlackFixed)
@@ -93,7 +92,7 @@ struct TripCard: View {
         
         let days = seconds / 86400
         let hours = (seconds % 86400) / 3600
-
+        
         switch (days, hours) {
         case (0, _):
             
@@ -108,7 +107,7 @@ struct TripCard: View {
             }
         case (_, 0):
             return "\(days) д"
-
+            
         default:
             return "\(days) д \(hours) ч"
         }
@@ -121,11 +120,11 @@ struct TripCard: View {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-
+        
         guard let date = formatter.date(from: value) else {
             return ""
         }
-
+        
         formatter.dateFormat = "d MMMM"
         formatter.locale = Locale(identifier: "ru_RU")
         

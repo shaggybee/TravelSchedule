@@ -44,7 +44,7 @@ struct StationSelectionView: View {
     }
     
     private var content: some View {
-        ScrollView (showsIndicators: false) {
+        ScrollView {
             LazyVStack(spacing: 0) {
                 ForEach(viewModel.filteredStations, id: \.hashValue) { station in
                     ListRowView(title: station.title ?? "") {
@@ -54,6 +54,7 @@ struct StationSelectionView: View {
                 }
             }
         }
+        .scrollIndicators(.hidden)
     }
 }
 

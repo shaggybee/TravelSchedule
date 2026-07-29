@@ -8,5 +8,5 @@
 enum RouteSearchPath: Hashable {
     case citySelection(RoutePointType)
     case stationSelection(RoutePointType, [Station])
-    case shedule(departureStation: Station, arrivalStation: Station)
+    case schedule(departureStation: Station, arrivalStation: Station)
 }

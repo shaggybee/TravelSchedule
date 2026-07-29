@@ -21,11 +21,9 @@ final class CitySelectionViewModel: ObservableObject {
     }
     
     var filteredSettlements: [Settlement] {
-        if search.isEmpty {
-            return settlements
-        }
-        
-        return settlements.filter({ $0.title?.localizedCaseInsensitiveContains(search) ?? false })
+        search.isEmpty
+        ? settlements
+        : settlements.filter({ $0.title?.localizedCaseInsensitiveContains(search) ?? false })
     }
     
     var settlements: [Settlement] = []
@@ -41,7 +39,7 @@ final class CitySelectionViewModel: ObservableObject {
     // MARK: - Public methods
     func fetchCities() {
         viewState = .loading
-
+        
         Task {
             do {
                 // TODO в следующем спринте сделать маппер для сопутствующийх типов (settlements), чтобы не расползались по проекту
@@ -59,7 +57,7 @@ final class CitySelectionViewModel: ObservableObject {
                         guard let title = settlement.title, !title.isEmpty else {
                             return false
                         }
-
+                        
                         return !(settlement.stations ?? []).isEmpty
                     }
                     .sorted { ($0.title ?? "").localizedStandardCompare($1.title ?? "") == .orderedAscending }

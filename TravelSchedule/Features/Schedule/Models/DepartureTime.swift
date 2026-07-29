@@ -28,10 +28,10 @@ enum DepartureTime: String, CaseIterable, Hashable {
     
     func contains(hour: Int) -> Bool {
         switch self {
-        case .morning:  return 6..<12 ~= hour
-        case .afternoon:return 12..<18 ~= hour
-        case .evening:  return 18..<24 ~= hour
-        case .night:    return 0..<6 ~= hour
+        case .morning: 6..<12 ~= hour
+        case .afternoon: 12..<18 ~= hour
+        case .evening: 18..<24 ~= hour
+        case .night: 0..<6 ~= hour
         }
     }
 }

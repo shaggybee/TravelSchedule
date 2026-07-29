@@ -50,7 +50,7 @@ struct RouteSearchView: View {
                     })
                     .toolbar(.hidden, for: .tabBar)
                     .navigationTitle("Выбор станции")
-                case let .shedule(departureStation, arrivalStation):
+                case let .schedule(departureStation, arrivalStation):
                     let scheduleViewModel = ScheduleViewModel(
                         departureStation: departureStation,
                         arrivalStation: arrivalStation,
@@ -81,7 +81,7 @@ struct RouteSearchView: View {
                 return
             }
             
-            navigationPath.append(RouteSearchPath.shedule(
+            navigationPath.append(RouteSearchPath.schedule(
                 departureStation: departureStation,
                 arrivalStation: arrivalStation)
             )

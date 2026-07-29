@@ -86,13 +86,9 @@ final class ScheduleViewModel: ObservableObject {
     
     // MARK: - Private methods
     private func filter(trips: [Trip]) -> [Trip] {
-        if (!hasActiveFilters) {
-            return trips
-        }
-        
-        return trips.filter {
-            matchesWithTransfers($0) && matchesDepartureTime($0)
-        }
+        !hasActiveFilters
+        ? trips
+        : trips.filter { matchesWithTransfers($0) && matchesDepartureTime($0) }
     }
     
     private func matchesDepartureTime(_ trip: Trip) -> Bool {

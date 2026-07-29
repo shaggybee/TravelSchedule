@@ -59,7 +59,7 @@ struct CitySelectionView: View {
     }
     
     private var content: some View {
-        ScrollView (showsIndicators: false) {
+        ScrollView {
             LazyVStack(spacing: 0) {
                 ForEach(viewModel.filteredSettlements, id: \.hashValue) { settlement in
                     ListRowView(title: settlement.title ?? "") {
@@ -69,6 +69,7 @@ struct CitySelectionView: View {
                 }
             }
         }
+        .scrollIndicators(.hidden)
     }
 }
 
