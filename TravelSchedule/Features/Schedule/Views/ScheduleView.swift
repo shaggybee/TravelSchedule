@@ -63,7 +63,7 @@ struct ScheduleView: View {
             LazyVStack(spacing: AppSpacing.space8) {
                 ForEach(viewModel.filteredTrips, id: \.uid) { trip in
                     TripCard(trip: trip, onTap: {
-                        navigationPath.append(SchedulePath.carrier)
+                        navigationPath.append(SchedulePath.carrier(code: trip.carrierCode))
                     })
                     .frame(height: 104)
                 }
@@ -115,8 +115,12 @@ struct ScheduleView: View {
                         
                         navigationPath.removeLast()
                     }
-            case .carrier:
-                CarrierView()
+            case .carrier(let code):
+                let carrierViewModel = CarrierViewModel(
+                    carrierCode: code,
+                    networkServiceProvider: viewModel.networkServiceProvider)
+                
+                CarrierView(viewModel: carrierViewModel)
             }
         }
     }

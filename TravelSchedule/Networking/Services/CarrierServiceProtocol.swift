@@ -6,5 +6,5 @@
 //
 
 protocol CarrierServiceProtocol {
-    func getCarrierInfo(by code: Int) async throws -> CarrierWrapper
+    func getCarrierInfo(by code: Int) async throws -> CarrierInfo
 }

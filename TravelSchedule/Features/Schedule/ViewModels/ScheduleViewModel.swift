@@ -21,10 +21,11 @@ final class ScheduleViewModel: ObservableObject {
         !scheduleFilters.departureTimes.isEmpty || scheduleFilters.showWithTransfers != nil
     }
     
+    var networkServiceProvider: NetworkServiceProviderProtocol
+    
     private(set) var scheduleFilters: ScheduleFilters = ScheduleFilters()
     
     // MARK: - Private properties
-    private var networkServiceProvider: NetworkServiceProviderProtocol
     private var logger = AppLogger.shared
     private lazy var dateFormatter = DateFormatter()
     
