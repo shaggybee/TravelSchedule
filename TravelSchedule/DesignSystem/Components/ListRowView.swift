@@ -22,7 +22,7 @@ struct ListRowView: View {
 
                 Spacer()
 
-                Image(systemName: "chevron.right")
+                Image(.chevronRight)
                     .foregroundStyle(.ypBlack)
                     .frame(width: Constants.imageSize, height: Constants.imageSize)
             }
