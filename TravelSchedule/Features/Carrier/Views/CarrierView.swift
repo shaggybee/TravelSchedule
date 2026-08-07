@@ -90,7 +90,7 @@ struct CarrierView: View {
     }
     
     private var carrierLogoPlaceholder: some View {
-        Image(systemName: "train.side.rear.car")
+        Image(systemName: AppSystemIcon.trainSideRearCar)
             .resizable()
             .scaledToFit()
             .frame(maxWidth: .infinity, maxHeight: 50)

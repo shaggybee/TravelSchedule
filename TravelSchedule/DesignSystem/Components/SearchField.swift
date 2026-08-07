@@ -13,7 +13,7 @@ struct SearchField: View {
     
     var body: some View {
         HStack {
-            Image(systemName: "magnifyingglass")
+            Image(systemName: AppSystemIcon.magnifyingglass)
                 .foregroundStyle(text.isEmpty ? .ypGray : .ypBlack)
             
             TextField(
@@ -27,7 +27,7 @@ struct SearchField: View {
                 Button {
                     text = ""
                 } label: {
-                    Image(systemName: "xmark.circle.fill")
+                    Image(systemName: AppSystemIcon.xmarkCircleFill)
                         .foregroundStyle(.ypGray)
                 }
             }

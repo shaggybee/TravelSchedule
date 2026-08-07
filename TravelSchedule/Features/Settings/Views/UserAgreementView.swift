@@ -34,6 +34,7 @@ struct UserAgreementView: View {
                     .background(.ypWhite)
             }
         }
+        .ignoresSafeArea()
     }
 }
 
