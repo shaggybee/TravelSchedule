@@ -9,11 +9,11 @@ import SwiftUI
 
 struct StoriesGroupView: View {
     private let stories: [Story]
-    private let onStoryTap: Handler<UUID>
+    private let onStoryTap: Handler<Story>
     
     init(
         stories: [Story],
-        onStoryTap: @escaping Handler<UUID>
+        onStoryTap: @escaping Handler<Story>
     ) {
         self.stories = stories
         self.onStoryTap = onStoryTap
@@ -62,7 +62,7 @@ struct StoriesGroupView: View {
             RoundedRectangle(cornerRadius: AppRadius.size16)
         )
         .onTapGesture {
-            onStoryTap(story.id)
+            onStoryTap(story)
         }
     }
 }

@@ -12,12 +12,28 @@ struct RouteSearchView: View {
     
     @StateObject private var viewModel = RouteSearchViewModel()
     @State private var navigationPath = NavigationPath()
+    @State private var selectedStory: Story?
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
             VStack(spacing: AppSpacing.space20) {
-                StoriesGroupView(stories: viewModel.stories) { _ in }
-                    .fixedSize(horizontal: false, vertical: true)
+                StoriesGroupView(stories: viewModel.stories) { story in
+                    selectedStory = story
+                }
+                .fixedSize(horizontal: false, vertical: true)
+                .fullScreenCover(
+                    item: $selectedStory,
+                    onDismiss: {
+                        selectedStory = nil
+                    },
+                    content: { selectedStory in
+                        let storiesViewModel = StoriesViewModel(
+                            stories: Story.mockStoriesList,
+                            currentStoryId: selectedStory.id
+                        )
+                        
+                        StoriesView(viewModel: storiesViewModel) { _ in }
+                    })
                 
                 VStack(spacing: AppSpacing.space16) {
                     RoutePointSelectionView(

@@ -17,4 +17,5 @@ enum AppSpacing {
     static let space18: CGFloat = 18
     static let space20: CGFloat = 20
     static let space24: CGFloat = 24
+    static let space40: CGFloat = 40
 }

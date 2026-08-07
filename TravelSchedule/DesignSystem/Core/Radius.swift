@@ -13,4 +13,5 @@ enum AppRadius {
     static let size16: CGFloat = 16
     static let size20: CGFloat = 20
     static let size24: CGFloat = 24
+    static let size40: CGFloat = 40
 }
