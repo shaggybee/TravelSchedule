@@ -12,6 +12,7 @@ final class RouteSearchViewModel: ObservableObject {
     // MARK: - Public properties
     @Published var departureStation: Station?
     @Published var arrivalStation: Station?
+    @Published var stories: [Story] = Story.mockStoriesList
     
     var isSearchScheduleAvailable: Bool {
         departureStation != nil && arrivalStation != nil
