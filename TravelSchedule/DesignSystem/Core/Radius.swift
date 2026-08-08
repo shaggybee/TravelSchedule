@@ -8,6 +8,7 @@
 import Foundation
 
 enum AppRadius {
+    static let size3: CGFloat = 3
     static let size10: CGFloat = 10
     static let size12: CGFloat = 12
     static let size16: CGFloat = 16
