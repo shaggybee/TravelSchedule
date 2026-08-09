@@ -17,7 +17,7 @@ struct UserAgreementView: View {
         ZStack {
             AppWebView(
                 state: $webViewState,
-                urlString: "https://yandex.ru/legal/practicum_offer/ru/",
+                urlString: viewModel.agreementUrl,
                 contentController: viewModel.webViewContentController
             )
                 .background(.ypWhite)

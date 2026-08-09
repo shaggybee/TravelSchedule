@@ -46,7 +46,7 @@ struct CarrierView: View {
     private var content: some View {
         VStack(alignment: .leading, spacing: AppSpacing.space16) {
             carrierLogo
-                .frame(height: 104)
+                .frame(height: Constants.carrierLogoHeight)
                 .foregroundStyle(.ypBlackFixed)
                 .background(
                     RoundedRectangle(cornerRadius: AppRadius.size24)
@@ -93,7 +93,7 @@ struct CarrierView: View {
         Image(systemName: AppSystemIcon.trainSideRearCar)
             .resizable()
             .scaledToFit()
-            .frame(maxWidth: .infinity, maxHeight: 50)
+            .frame(maxWidth: .infinity, maxHeight: Constants.carrierLogoPlaceholderHeight)
     }
     
     private func getContactLink(with value: String?, for scheme: ContactLinkScheme) -> some View {
@@ -116,6 +116,13 @@ struct CarrierView: View {
             }
         }
         .padding(.vertical, AppSpacing.space12)
+    }
+}
+
+private extension CarrierView {
+    enum Constants {
+        static let carrierLogoHeight: CGFloat = 104
+        static let carrierLogoPlaceholderHeight: CGFloat = 50
     }
 }
 

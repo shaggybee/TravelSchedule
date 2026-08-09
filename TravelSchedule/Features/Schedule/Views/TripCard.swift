@@ -27,7 +27,9 @@ struct TripCard: View {
                 } placeholder: {
                     Color(.ypGray)
                 }
-                .frame(width: 38, height: 38)
+                .frame(
+                    width: Constants.carrierLogoSize,
+                    height: Constants.carrierLogoSize)
                 .background(.white)
                 .clipShape(RoundedRectangle(cornerRadius: AppRadius.size12))
                 
@@ -90,8 +92,8 @@ struct TripCard: View {
             return ""
         }
         
-        let days = seconds / 86400
-        let hours = (seconds % 86400) / 3600
+        let days = seconds / Constants.secondsPerDay
+        let hours = (seconds % Constants.secondsPerDay) / Constants.secondsPerHour
         
         switch (days, hours) {
         case (0, _):
@@ -129,6 +131,15 @@ struct TripCard: View {
         formatter.locale = Locale(identifier: "ru_RU")
         
         return formatter.string(from: date)
+    }
+}
+
+// MARK: - Constants
+private extension TripCard {
+    enum Constants {
+        static let carrierLogoSize: CGFloat = 38
+        static let secondsPerHour: Int = 3_600
+        static let secondsPerDay: Int = 86_400
     }
 }
 

@@ -65,10 +65,10 @@ struct ScheduleView: View {
                     TripCard(trip: trip, onTap: {
                         navigationPath.append(SchedulePath.carrier(code: trip.carrierCode))
                     })
-                    .frame(height: 104)
+                    .frame(height: Constants.tripCardHeight)
                 }
             }
-            .padding(.bottom, 92)
+            .padding(.bottom, Constants.tripCardsStackBottomPadding)
         }
         .scrollIndicators(.hidden)
     }
@@ -85,11 +85,13 @@ struct ScheduleView: View {
                 if viewModel.hasActiveFilters {
                     Circle()
                         .fill(.ypRed)
-                        .frame(width: 8, height: 8)
+                        .frame(
+                            width: Constants.activeFilterIndicatorSize,
+                            height: Constants.activeFilterIndicatorSize)
                 }
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 60)
+            .frame(height: Constants.filtersButtonHeight)
             .contentShape(Rectangle())
             .background(
                 RoundedRectangle(cornerRadius: AppRadius.size16)
@@ -123,6 +125,16 @@ struct ScheduleView: View {
                 CarrierView(viewModel: carrierViewModel)
             }
         }
+    }
+}
+
+// MARK: - Constants
+private extension ScheduleView {
+    enum Constants {
+        static let tripCardHeight: CGFloat = 104
+        static let tripCardsStackBottomPadding: CGFloat = 92
+        static let filtersButtonHeight: CGFloat = 60
+        static let activeFilterIndicatorSize: CGFloat = 8
     }
 }
 

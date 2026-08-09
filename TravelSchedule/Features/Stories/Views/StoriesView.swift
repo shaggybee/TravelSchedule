@@ -61,7 +61,7 @@ struct StoriesView: View {
                     }
                 }
             }
-            .animation(.easeInOut(duration: 0.5), value: viewModel.currentStory.id)
+            .animation(.easeInOut(duration: Constants.storyTransitionDuration), value: viewModel.currentStory.id)
             .clipShape(.rect(cornerRadius: AppRadius.size40))
             .background(.ypBlackFixed)
             .onTapGesture { location in
@@ -159,6 +159,7 @@ struct StoriesView: View {
 // MARK: - Constants
 private extension StoriesView {
     enum Constants {
+        static let storyTransitionDuration: CGFloat = 0.5
         static let closeButtonSize: CGFloat = 30
         static let swipeMinimumDistance: CGFloat = 20
         static let swipeDistanceThreshold: CGFloat = 80

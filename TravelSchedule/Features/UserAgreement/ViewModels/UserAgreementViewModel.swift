@@ -11,6 +11,9 @@ import WebKit
 final class UserAgreementViewModel {
     
     // MARK: - Public properties
+    // TODO в следующем спринте, после добавления локализации, попробовать сделать переключение между EN <-> RU
+    var agreementUrl: String = "https://yandex.ru/legal/practicum_offer/ru/"
+    
     var webViewContentController: WKUserContentController {
         let contentController = WKUserContentController()
         
