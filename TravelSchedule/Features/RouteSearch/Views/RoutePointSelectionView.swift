@@ -43,7 +43,7 @@ struct RoutePointSelectionView: View {
             )
             
         }
-        .padding(16)
+        .padding(AppSpacing.space16)
         .background(
             RoundedRectangle(cornerRadius: AppRadius.size20)
                 .fill(.ypBlue)

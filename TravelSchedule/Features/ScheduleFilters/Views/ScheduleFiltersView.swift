@@ -34,7 +34,7 @@ struct ScheduleFiltersView: View {
                         ) {
                             viewModel.toggle(time)
                         }
-                        .frame(height: 60)
+                        .frame(height: Constants.listRowViewHeight)
                     }
                 }
                 
@@ -50,7 +50,7 @@ struct ScheduleFiltersView: View {
                     ) {
                         viewModel.filters.showWithTransfers = true
                     }
-                    .frame(height: 60)
+                    .frame(height: Constants.listRowViewHeight)
                     
                     SelectionRow(
                         title: "Нет",
@@ -59,7 +59,7 @@ struct ScheduleFiltersView: View {
                     ) {
                         viewModel.filters.showWithTransfers = false
                     }
-                    .frame(height: 60)
+                    .frame(height: Constants.listRowViewHeight)
                 }
             }
         }
@@ -72,7 +72,7 @@ struct ScheduleFiltersView: View {
                         .font(AppFont.bold17)
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
-                        .frame(height: 60)
+                        .frame(height: Constants.applyButtonHeight)
                         .background(
                             RoundedRectangle(cornerRadius: AppRadius.size16)
                                 .fill(.ypBlue)
@@ -86,6 +86,14 @@ struct ScheduleFiltersView: View {
         }
         .padding([.top, .horizontal], AppSpacing.space16)
         .background(.ypWhite)
+    }
+}
+
+// MARK: - Constants
+private extension ScheduleFiltersView {
+    enum Constants {
+        static let listRowViewHeight: CGFloat = 60
+        static let applyButtonHeight: CGFloat = 60
     }
 }
 

@@ -50,11 +50,18 @@ struct StationSelectionView: View {
                     ListRowView(title: station.title ?? "") {
                         onStationSelected(station)
                     }
-                    .frame(height: 60)
+                    .frame(height: Constants.listRowViewHeight)
                 }
             }
         }
         .scrollIndicators(.hidden)
+    }
+}
+
+// MARK: - Constants
+private extension StationSelectionView {
+    enum Constants {
+        static let listRowViewHeight: CGFloat = 60
     }
 }
 

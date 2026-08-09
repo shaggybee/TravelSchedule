@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct MainView: View {
+    
+    @AppStorage(AppStorageKey.isDarkMode) private var isDarkMode = false
+    
     let networkServiceProvider: NetworkServiceProviderProtocol
     
     var body: some View {
@@ -24,6 +27,7 @@ struct MainView: View {
         }
         .tint(.ypBlack)
         .background(.ypWhite)
+        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }
 

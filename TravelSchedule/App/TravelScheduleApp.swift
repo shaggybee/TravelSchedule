@@ -9,6 +9,9 @@ import SwiftUI
 
 @main
 struct TravelScheduleApp: App {
+    
+    @AppStorage(AppStorageKey.isDarkMode) private var isDarkMode = false
+    
     private var logger = AppLogger.shared
     private var networkServiceProvider: NetworkServiceProviderProtocol?
     
@@ -29,6 +32,7 @@ struct TravelScheduleApp: App {
                 MainView(networkServiceProvider: networkServiceProvider)
             } else {
                 ErrorStateView(error: .apiError)
+                    .preferredColorScheme(isDarkMode ? .dark : .light)
             }
         }
     }

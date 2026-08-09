@@ -16,13 +16,13 @@ struct SelectionRow: View {
             switch self {
             case .checkbox:
                 isSelected
-                ? "checkmark.square.fill"
-                : "square"
+                ? AppSystemIcon.checkmarkSquareFill
+                : AppSystemIcon.square
                 
             case .radio:
                 isSelected
-                ? "largecircle.fill.circle"
-                : "circle"
+                ? AppSystemIcon.largecircleFillCircle
+                : AppSystemIcon.circle
             }
         }
     }

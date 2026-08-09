@@ -12,6 +12,7 @@ final class RouteSearchViewModel: ObservableObject {
     // MARK: - Public properties
     @Published var departureStation: Station?
     @Published var arrivalStation: Station?
+    @Published var stories: [Story] = Story.mockStoriesList
     
     var isSearchScheduleAvailable: Bool {
         departureStation != nil && arrivalStation != nil
@@ -34,5 +35,13 @@ final class RouteSearchViewModel: ObservableObject {
         
         departureStation = arrivalStation
         arrivalStation = temp
+    }
+    
+    func markStoryAsViewed(by id: UUID) {
+        guard let index = stories.firstIndex(where: { $0.id == id }), !stories[index].isViewed else {
+            return
+        }
+
+        stories[index].isViewed = true
     }
 }

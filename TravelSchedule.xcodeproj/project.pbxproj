@@ -10,9 +10,11 @@
 		6367B0AA2FF910EE00F2EE02 /* OpenAPIRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 6367B0A92FF910EE00F2EE02 /* OpenAPIRuntime */; };
 		6367B0AD2FF9110A00F2EE02 /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = 6367B0AC2FF9110A00F2EE02 /* OpenAPIURLSession */; };
 		6367B22A2FF9273500F2EE02 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 6367B2292FF9273500F2EE02 /* Logging */; };
+		63F622E23024933B00B836CE /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F622E13024933B00B836CE /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		63F622E13024933B00B836CE /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		63F7C2C12FF593CF008B56D4 /* TravelSchedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelSchedule.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -31,6 +33,7 @@
 			files = (
 				6367B0AD2FF9110A00F2EE02 /* OpenAPIURLSession in Frameworks */,
 				6367B22A2FF9273500F2EE02 /* Logging in Frameworks */,
+				63F622E23024933B00B836CE /* WebKit.framework in Frameworks */,
 				6367B0AA2FF910EE00F2EE02 /* OpenAPIRuntime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -38,10 +41,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		63F622E03024933A00B836CE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				63F622E13024933B00B836CE /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		63F7C2B82FF593CF008B56D4 = {
 			isa = PBXGroup;
 			children = (
 				63F7C2C32FF593CF008B56D4 /* TravelSchedule */,
+				63F622E03024933A00B836CE /* Frameworks */,
 				63F7C2C22FF593CF008B56D4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -278,7 +290,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0.3;
 				DEVELOPMENT_TEAM = X3557Q52C4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -292,7 +304,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.shaggybee.TravelSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -316,7 +328,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0.3;
 				DEVELOPMENT_TEAM = X3557Q52C4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -330,7 +342,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.shaggybee.TravelSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

@@ -10,6 +10,7 @@ final class NetworkServiceProvider: NetworkServiceProviderProtocol {
     
     private(set) lazy var stationsService: StationsServiceProtocol = StationsService(client: client)
     private(set) lazy var scheduleService: ScheduleBetweenStationsServiceProtocol = ScheduleBetweenStationsService(client: client)
+    private(set) lazy var carrierService: CarrierServiceProtocol = CarrierService(client: client)
 
     init(client: Client) {
         self.client = client

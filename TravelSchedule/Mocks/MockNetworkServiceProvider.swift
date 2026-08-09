@@ -11,4 +11,5 @@ final class MockNetworkServiceProvider: NetworkServiceProviderProtocol {
     // MARK: - Public properties
     private(set) lazy var stationsService: StationsServiceProtocol = MockStationsService()
     private(set) lazy var scheduleService: ScheduleBetweenStationsServiceProtocol = MockScheduleBetweenStationsService()
+    private(set) lazy var carrierService: CarrierServiceProtocol = MockCarrierService()
 }

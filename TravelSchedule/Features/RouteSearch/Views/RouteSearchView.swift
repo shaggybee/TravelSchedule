@@ -12,23 +12,49 @@ struct RouteSearchView: View {
     
     @StateObject private var viewModel = RouteSearchViewModel()
     @State private var navigationPath = NavigationPath()
+    @State private var selectedStory: Story?
     
     var body: some View {
         NavigationStack(path: $navigationPath) {
-            VStack(spacing: AppSpacing.space16) {
-                RoutePointSelectionView(
-                    departureStationName: viewModel.departureStation?.title,
-                    arrivalStationName: viewModel.arrivalStation?.title,
-                    onRoutePointTypeSelected: { type in
-                        navigationPath.append(RouteSearchPath.citySelection(type))
-                    }
-                ) {
-                    viewModel.swapPoints()
+            VStack(spacing: AppSpacing.space20) {
+                StoriesGroupView(stories: viewModel.stories) { story in
+                    selectedStory = story
                 }
+                .fixedSize(horizontal: false, vertical: true)
+                .fullScreenCover(
+                    item: $selectedStory,
+                    onDismiss: {
+                        selectedStory = nil
+                    },
+                    content: { selectedStory in
+                        let storiesViewModel = StoriesViewModel(
+                            stories: Story.mockStoriesList,
+                            currentStoryId: selectedStory.id
+                        )
+                        
+                        StoriesView(viewModel: storiesViewModel) { storyId in
+                            viewModel.markStoryAsViewed(by: storyId)
+                        }
+                    })
                 
-                if viewModel.isSearchScheduleAvailable{
-                    searchButton
+                VStack(spacing: AppSpacing.space16) {
+                    RoutePointSelectionView(
+                        departureStationName: viewModel.departureStation?.title,
+                        arrivalStationName: viewModel.arrivalStation?.title,
+                        onRoutePointTypeSelected: { type in
+                            navigationPath.append(RouteSearchPath.citySelection(type))
+                        }
+                    ) {
+                        viewModel.swapPoints()
+                    }
+                    
+                    if viewModel.isSearchScheduleAvailable{
+                        searchButton
+                    }
+                    
+                    Spacer()
                 }
+                .padding(.horizontal, AppSpacing.space16)
                 
                 Spacer()
             }
@@ -64,11 +90,7 @@ struct RouteSearchView: View {
                     .toolbar(.hidden, for: .tabBar)
                 }
             }
-            .padding(EdgeInsets(
-                top: AppSpacing.space24,
-                leading: AppSpacing.space16,
-                bottom: 0,
-                trailing: AppSpacing.space16))
+            .frame(maxHeight: .infinity)
             .background(.ypWhite)
             .toolbar(.hidden, for: .navigationBar)
         }
@@ -89,7 +111,7 @@ struct RouteSearchView: View {
             Text("Найти")
                 .font(AppFont.bold17)
                 .foregroundStyle(.white)
-                .frame(width: 150, height: 60)
+                .frame(width: Constants.searchButtonWidth, height: Constants.searchButtonHeight)
                 .background(
                     RoundedRectangle(cornerRadius: AppRadius.size16)
                         .fill(.ypBlue)
@@ -97,6 +119,14 @@ struct RouteSearchView: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+    }
+}
+
+// MARK: - Constants
+private extension RouteSearchView {
+    enum Constants {
+        static let searchButtonHeight: Double = 60
+        static let searchButtonWidth: Double = 150
     }
 }
 
