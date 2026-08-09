@@ -32,7 +32,9 @@ struct RouteSearchView: View {
                             currentStoryId: selectedStory.id
                         )
                         
-                        StoriesView(viewModel: storiesViewModel) { _ in }
+                        StoriesView(viewModel: storiesViewModel) { storyId in
+                            viewModel.markStoryAsViewed(by: storyId)
+                        }
                     })
                 
                 VStack(spacing: AppSpacing.space16) {

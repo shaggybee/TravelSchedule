@@ -12,6 +12,8 @@ struct StoriesView: View {
     
     @StateObject private var viewModel: StoriesViewModel
     
+    @State private var showDescription: Bool = false
+    
     private let onStoryViewed: Handler<UUID>
     
     init(viewModel: StoriesViewModel, onStoryViewed: @escaping Handler<UUID>) {
@@ -33,6 +35,17 @@ struct StoriesView: View {
                     .clipped()
                 
                 VStack(spacing: AppSpacing.space4) {
+                    StoriesProgressBar(
+                        numberOfSections: viewModel.numberOfStories,
+                        currentSection: viewModel.currentStoryIndex + 1,
+                        sectionProgress: viewModel.storyProgress)
+                    .padding(EdgeInsets(
+                        top: AppSpacing.space28,
+                        leading: AppSpacing.space12,
+                        bottom: AppSpacing.space12,
+                        trailing: AppSpacing.space12)
+                    )
+                    
                     HStack {
                         Spacer()
                         
@@ -42,11 +55,43 @@ struct StoriesView: View {
                     
                     Spacer()
                     
-                    descriptionBlock
+                    if showDescription {
+                        descriptionBlock
+                            .transition(.opacity)
+                    }
                 }
             }
+            .animation(.easeInOut(duration: 0.5), value: viewModel.currentStory.id)
             .clipShape(.rect(cornerRadius: AppRadius.size40))
             .background(.ypBlackFixed)
+            .onTapGesture { location in
+                if location.x < proxy.size.width / 2 {
+                    viewModel.previousStory()
+                } else {
+                    viewModel.nextStory()
+                }
+            }
+            .highPriorityGesture(swipeStoryGesture)
+            .simultaneousGesture(storyPauseGesture)
+        }
+        .onAppear {
+            viewModel.startStoryPlayback()
+            
+            withAnimation(.easeInOut(duration: 1)) {
+                showDescription.toggle()
+            }
+        }
+        .onChange(of: viewModel.viewedStoryId) { oldStoryId, newStoryId in
+            guard let newStoryId, newStoryId != oldStoryId else {
+                return
+            }
+            
+            onStoryViewed(newStoryId)
+        }
+        .onChange(of: viewModel.shouldDismiss) { _, shouldDismiss in
+            if shouldDismiss {
+                dismiss()
+            }
         }
     }
     
@@ -56,7 +101,7 @@ struct StoriesView: View {
         } label: {
             Image(.close)
         }
-        .frame(width: 30, height: 30)
+        .frame(width: Constants.closeButtonSize, height: Constants.closeButtonSize)
         .foregroundStyle(.white)
         .background(Circle().fill(.ypBlackFixed))
     }
@@ -77,12 +122,53 @@ struct StoriesView: View {
         .padding(.horizontal, AppSpacing.space16)
         .padding(.bottom, AppSpacing.space40)
     }
+    
+    private var swipeStoryGesture: some Gesture {
+        DragGesture(minimumDistance: Constants.swipeMinimumDistance, coordinateSpace: .global)
+            .onEnded { value in
+                let x = value.translation.width
+                let y = value.translation.height
+                
+                guard max(abs(x), abs(y)) >= Constants.swipeDistanceThreshold else {
+                    return
+                }
+                
+                if abs(x) > abs(y) {
+                    if x < 0 {
+                        viewModel.nextStory()
+                    } else {
+                        viewModel.previousStory()
+                    }
+                } else if y > 0 {
+                    dismiss()
+                }
+            }
+    }
+    
+    private var storyPauseGesture: some Gesture {
+        DragGesture(minimumDistance: 0, coordinateSpace: .global)
+            .onChanged { _ in
+                viewModel.stopStoryPlayback()
+            }
+            .onEnded { _ in
+                viewModel.startStoryPlayback()
+            }
+    }
+}
+
+// MARK: - Constants
+private extension StoriesView {
+    enum Constants {
+        static let closeButtonSize: CGFloat = 30
+        static let swipeMinimumDistance: CGFloat = 20
+        static let swipeDistanceThreshold: CGFloat = 80
+    }
 }
 
 #Preview {
     let viewModel = StoriesViewModel(
         stories: Story.mockStoriesList,
-        currentStoryId: Story.mockStoriesList[6].id
+        currentStoryId: Story.mockStoriesList[2].id
     )
     
     StoriesView(viewModel: viewModel) { _ in }
