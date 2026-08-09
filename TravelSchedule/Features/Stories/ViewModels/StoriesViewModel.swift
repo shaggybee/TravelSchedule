@@ -73,7 +73,6 @@ final class StoriesViewModel: ObservableObject {
         }
         
         stopStoryPlayback()
-        
         switchToStory(at: currentStoryIndex - 1)
     }
     

@@ -36,7 +36,9 @@ struct AppWebView: UIViewRepresentable {
         WebViewCoordinator(state: $state)
     }
     
-    func updateUIView(_ uiView: UIViewType, context: Context) {}
+    func updateUIView(_ uiView: UIViewType, context: Context) {
+        // do nothing
+    }
     
     // MARK: - Private methods
     private func getWebView(contentController: WKUserContentController?) -> WKWebView {
