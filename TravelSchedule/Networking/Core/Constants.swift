@@ -8,5 +8,14 @@
 import Foundation
 
 enum NetworkingConstants {
-    static let apiKey = "909a8e28-d6da-494a-b426-7a64c7c6ad5d"
+    private static let apiInfoPlistKey = "YANDEX_API_KEY"
+    
+    static var apiKey: String {
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: apiInfoPlistKey) as? String,
+                !apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            preconditionFailure("Missing api key")
+        }
+        
+        return apiKey
+    }
 }
