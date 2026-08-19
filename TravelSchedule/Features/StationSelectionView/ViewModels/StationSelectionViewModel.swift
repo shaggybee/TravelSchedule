@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+@MainActor
 final class StationSelectionViewModel: ObservableObject {
     // MARK: - Public properties
     @Published var search = ""
@@ -21,7 +22,7 @@ final class StationSelectionViewModel: ObservableObject {
             return stations
         }
         
-        return stations.filter({ $0.title?.localizedCaseInsensitiveContains(search) ?? false })
+        return stations.filter({ $0.title.localizedCaseInsensitiveContains(search)})
     }
     
     // MARK: - Private properties

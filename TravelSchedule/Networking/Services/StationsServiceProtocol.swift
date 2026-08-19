@@ -6,5 +6,5 @@
 //
 
 protocol StationsServiceProtocol {
-    func getAllStations() async throws -> AllStations
+    func getAllStations() async throws -> [Settlement]
 }

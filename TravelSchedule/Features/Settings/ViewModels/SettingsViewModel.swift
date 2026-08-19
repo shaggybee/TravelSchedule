@@ -6,7 +6,9 @@
 //
 
 import Foundation
+import Observation
 
+@Observable
 final class SettingsViewModel {
     // MARK: - Public properties
     var appVersion: String {

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 struct ScheduleFiltersView: View {
     @StateObject private var viewModel: ScheduleFiltersViewModel

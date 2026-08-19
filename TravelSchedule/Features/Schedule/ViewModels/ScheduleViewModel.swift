@@ -8,13 +8,14 @@
 import Foundation
 import Combine
 
+@MainActor
 final class ScheduleViewModel: ObservableObject {
     // MARK: - Public properties
     @Published var viewState: ViewState = .idle
     @Published var filteredTrips: [Trip] = []
     
     var routeTitle: String {
-        "\(departureStation.title ?? "") → \(arrivalStation.title ?? "")"
+        "\(departureStation.title) → \(arrivalStation.title)"
     }
     
     var hasActiveFilters: Bool {
@@ -51,37 +52,41 @@ final class ScheduleViewModel: ObservableObject {
         filteredTrips = filter(trips: trips)
     }
     
-    func fetchSchedule() {
+    func fetchSchedule() async {
+        guard viewState != .loaded else { return }
+        
         viewState = .loading
         
-        Task {
-            do {
-                guard let departureStationCode = departureStation.codes?.yandex_code,
-                      let arrivalStationCode = arrivalStation.codes?.yandex_code else
-                {
-                    viewState = .loaded
-                    
-                    return
-                }
-                
-                dateFormatter.dateFormat = "yyyy-MM-dd"
-                
-                let currentDate = Date()
-                
-                trips = try await networkServiceProvider.scheduleService.getScheduleBetweenStations(
-                    from: departureStationCode,
-                    to: arrivalStationCode,
-                    date: dateFormatter.string(from: currentDate)
-                )
-                
-                filteredTrips = filter(trips: trips)
-                
+        do {
+            guard let departureStationCode = departureStation.code,
+                  let arrivalStationCode = arrivalStation.code else
+            {
                 viewState = .loaded
-            } catch let error as NetworkError {
-                viewState = .error(error)
                 
-                logger.error("[ScheduleViewModel.fetchSchedule] Failed to get schedule. Error - \(error)")
+                return
             }
+            
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            
+            let currentDate = Date()
+            
+            trips = try await networkServiceProvider.getScheduleBetweenStations(
+                from: departureStationCode,
+                to: arrivalStationCode,
+                date: dateFormatter.string(from: currentDate)
+            )
+            
+            filteredTrips = filter(trips: trips)
+            
+            viewState = .loaded
+        } catch {
+            if let error = error as? NetworkError {
+                viewState = .error(error)
+            } else {
+                viewState = .error(.apiError)
+            }
+            
+            logger.error("[ScheduleViewModel.fetchSchedule] Failed to get schedule. Error - \(error)")
         }
     }
     

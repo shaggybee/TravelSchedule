@@ -45,13 +45,7 @@ final class ScheduleBetweenStationsService: ApiServiceBase, ScheduleBetweenStati
             return transform(segments: segmentsSchedule)
             
         } catch {
-            if let clientError = error as? ClientError,
-               let urlError = clientError.underlyingError as? URLError, urlError.code == .notConnectedToInternet
-            {
-                throw NetworkError.noInternet
-            } else {
-                throw NetworkError.apiError
-            }
+            throw NetworkErrorMapper.map(error)
         }
     }
     

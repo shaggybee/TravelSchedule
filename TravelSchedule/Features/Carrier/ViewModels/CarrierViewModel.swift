@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+@MainActor
 final class CarrierViewModel: ObservableObject {
     // MARK: - Public properties
     @Published var viewState: ViewState = .idle
@@ -33,25 +34,29 @@ final class CarrierViewModel: ObservableObject {
     }
     
     // MARK: - Public methods
-    func fetchCarrierInfo() {
+    func fetchCarrierInfo() async {
+        guard viewState != .loaded else { return }
+        
         viewState = .loading
         
-        Task {
-            do {
-                guard let carrierCode else {
-                    viewState = .loaded
-                    
-                    return
-                }
-                
-                carrierInfo = try await networkServiceProvider.carrierService.getCarrierInfo(by: carrierCode)
-                
+        do {
+            guard let carrierCode else {
                 viewState = .loaded
-            } catch let error as NetworkError {
-                viewState = .error(error)
                 
-                logger.error("[CarrierViewModel.fetchCarrierInfo] Failed to get carrier info. Error - \(error)")
+                return
             }
+            
+            carrierInfo = try await networkServiceProvider.getCarrierInfo(by: carrierCode)
+            
+            viewState = .loaded
+        } catch {
+            if let error = error as? NetworkError {
+                viewState = .error(error)
+            } else {
+                viewState = .error(.apiError)
+            }
+            
+            logger.error("[CarrierViewModel.fetchCarrierInfo] Failed to get carrier info. Error - \(error)")
         }
     }
 }

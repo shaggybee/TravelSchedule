@@ -47,7 +47,7 @@ struct StationSelectionView: View {
         ScrollView {
             LazyVStack(spacing: 0) {
                 ForEach(viewModel.filteredStations, id: \.hashValue) { station in
-                    ListRowView(title: station.title ?? "") {
+                    ListRowView(title: station.title) {
                         onStationSelected(station)
                     }
                     .frame(height: Constants.listRowViewHeight)

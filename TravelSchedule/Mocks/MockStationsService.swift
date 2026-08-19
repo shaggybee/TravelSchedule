@@ -7,7 +7,9 @@
 
 final class MockStationsService: StationsServiceProtocol {
     // MARK: - Public Methods
-    func getAllStations() async throws -> AllStations {
-        return AllStations(countries: [])
+    func getAllStations() async throws -> [Settlement] {
+        return [Settlement(
+            title: "Таганрог", stations: []
+        )]
     }
 }
