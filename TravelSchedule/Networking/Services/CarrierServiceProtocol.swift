@@ -5,6 +5,6 @@
 //  Created by Kislov Vadim on 04.07.2026.
 //
 
-protocol CarrierServiceProtocol {
+protocol CarrierServiceProtocol: Sendable {
     func getCarrierInfo(by code: Int) async throws -> CarrierInfo
 }

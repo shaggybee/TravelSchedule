@@ -5,6 +5,6 @@
 //  Created by Kislov Vadim on 04.07.2026.
 //
 
-protocol ScheduleBetweenStationsServiceProtocol {
+protocol ScheduleBetweenStationsServiceProtocol: Sendable {
     func getScheduleBetweenStations(from: String, to: String, date: String?) async throws -> [Trip]
 }
