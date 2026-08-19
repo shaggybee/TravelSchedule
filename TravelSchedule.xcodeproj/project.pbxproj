@@ -19,6 +19,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		63835B943036332500E67E34 /* Configurations */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Configurations;
+			sourceTree = "<group>";
+		};
 		63F7C2C32FF593CF008B56D4 /* TravelSchedule */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TravelSchedule;
@@ -52,6 +57,7 @@
 		63F7C2B82FF593CF008B56D4 = {
 			isa = PBXGroup;
 			children = (
+				63835B943036332500E67E34 /* Configurations */,
 				63F7C2C32FF593CF008B56D4 /* TravelSchedule */,
 				63F622E03024933A00B836CE /* Frameworks */,
 				63F7C2C22FF593CF008B56D4 /* Products */,
@@ -83,6 +89,7 @@
 				6367B0B22FF9122000F2EE02 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				63835B943036332500E67E34 /* Configurations */,
 				63F7C2C32FF593CF008B56D4 /* TravelSchedule */,
 			);
 			name = TravelSchedule;
