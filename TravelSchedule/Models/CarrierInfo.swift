@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CarrierInfo {
+struct CarrierInfo: Sendable {
     let name: String?
     let phone: String?
     let email: String?

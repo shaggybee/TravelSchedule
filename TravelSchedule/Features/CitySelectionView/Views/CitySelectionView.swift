@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 struct CitySelectionView: View {
     @StateObject private var viewModel: CitySelectionViewModel
@@ -21,8 +20,6 @@ struct CitySelectionView: View {
         _viewModel = StateObject(wrappedValue: viewModel)
 
         self.onCitySelected = onCitySelected
-        
-        viewModel.fetchCities()
     }
     
     var body: some View {
@@ -55,6 +52,8 @@ struct CitySelectionView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(.ypWhite)
             }
+        }.task {
+            await viewModel.fetchCities()
         }
     }
     
@@ -62,7 +61,7 @@ struct CitySelectionView: View {
         ScrollView {
             LazyVStack(spacing: 0) {
                 ForEach(viewModel.filteredSettlements, id: \.hashValue) { settlement in
-                    ListRowView(title: settlement.title ?? "") {
+                    ListRowView(title: settlement.title) {
                         onCitySelected(settlement)
                     }
                     .frame(height: Constants.listRowViewHeight)

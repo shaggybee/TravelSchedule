@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 struct ScheduleView: View {
     @StateObject private var viewModel: ScheduleViewModel
@@ -18,8 +17,6 @@ struct ScheduleView: View {
     ) {
         _navigationPath = navigationPath
         _viewModel = StateObject(wrappedValue: viewModel)
-        
-        viewModel.fetchSchedule()
     }
     
     var body: some View {
@@ -55,6 +52,8 @@ struct ScheduleView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(.ypWhite)
             }
+        }.task {
+            await viewModel.fetchSchedule()
         }
     }
     
@@ -142,8 +141,8 @@ private extension ScheduleView {
     @Previewable @State var navigationPath = NavigationPath()
     
     let viewModel = ScheduleViewModel(
-        departureStation: Station(),
-        arrivalStation: Station(),
+        departureStation: Station(title: "Первомайская", code: "12"),
+        arrivalStation: Station(title: "Мичурина", code: "11"),
         networkServiceProvider: MockNetworkServiceProvider()
     )
     

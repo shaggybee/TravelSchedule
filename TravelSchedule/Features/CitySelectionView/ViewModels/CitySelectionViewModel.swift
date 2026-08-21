@@ -10,6 +10,7 @@ import Combine
 import OpenAPIRuntime
 import OpenAPIURLSession
 
+@MainActor
 final class CitySelectionViewModel: ObservableObject {
     // MARK: - Public properties
     @Published var viewState: ViewState = .idle
@@ -23,7 +24,7 @@ final class CitySelectionViewModel: ObservableObject {
     var filteredSettlements: [Settlement] {
         search.isEmpty
         ? settlements
-        : settlements.filter({ $0.title?.localizedCaseInsensitiveContains(search) ?? false })
+        : settlements.filter({ $0.title.localizedCaseInsensitiveContains(search) })
     }
     
     var settlements: [Settlement] = []
@@ -37,39 +38,23 @@ final class CitySelectionViewModel: ObservableObject {
     }
     
     // MARK: - Public methods
-    func fetchCities() {
+    func fetchCities() async {
+        guard viewState != .loaded else { return }
+        
         viewState = .loading
         
-        Task {
-            do {
-                // TODO в следующем спринте сделать маппер для сопутствующийх типов (settlements), чтобы не расползались по проекту
-                
-                let stations = try await networkServiceProvider.stationsService.getAllStations()
-                
-                guard let countryOfRussia = stations.countries?.first(where: { $0.title == "Россия" }),
-                      let regionsOfRussia = countryOfRussia.regions else {
-                    return
-                }
-                
-                settlements = regionsOfRussia
-                    .flatMap { $0.settlements ?? [] }
-                    .filter { settlement in
-                        guard let title = settlement.title, !title.isEmpty else {
-                            return false
-                        }
-                        
-                        return !(settlement.stations ?? []).isEmpty
-                    }
-                    .sorted { ($0.title ?? "").localizedStandardCompare($1.title ?? "") == .orderedAscending }
-                
-                viewState = .loaded
-            } catch let error as NetworkError {
+        do {
+            settlements = try await networkServiceProvider.getAllStations()
+            
+            viewState = .loaded
+        } catch {
+            if let error = error as? NetworkError {
                 viewState = .error(error)
-                
-                throw error
-            } catch {
-                logger.error("[CitySelectionViewModel.fetchCities] Failed to get cities. Error - \(error)")
+            } else {
+                viewState = .error(.apiError)
             }
+            
+            logger.error("[CitySelectionViewModel.fetchCities] Failed to get cities. Error - \(error)")
         }
     }
 }

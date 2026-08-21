@@ -64,7 +64,7 @@ struct RouteSearchView: View {
                     let citySelectionViewModel = CitySelectionViewModel(networkServiceProvider: networkServiceProvider)
                     
                     CitySelectionView(viewModel: citySelectionViewModel) { city in
-                        navigationPath.append(RouteSearchPath.stationSelection(type, city.stations ?? []))
+                        navigationPath.append(RouteSearchPath.stationSelection(type, city.stations))
                     }
                     .toolbar(.hidden, for: .tabBar)
                     .navigationTitle("Выбор города")

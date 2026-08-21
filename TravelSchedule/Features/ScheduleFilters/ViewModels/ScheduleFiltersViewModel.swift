@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+@MainActor
 final class ScheduleFiltersViewModel: ObservableObject {
     // MARK: - Public properties
     @Published var filters: ScheduleFilters

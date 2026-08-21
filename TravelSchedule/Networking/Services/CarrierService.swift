@@ -14,18 +14,12 @@ final class CarrierService: ApiServiceBase, CarrierServiceProtocol {
     func getCarrierInfo(by code: Int) async throws -> CarrierInfo {
         do {
             let response = try await client.getCarrierInfo(query: .init(code: code))
-      
+            
             let carrierInfo = try response.ok.body.json
             
             return transform(carrier: carrierInfo)
         } catch {
-            if let clientError = error as? ClientError,
-               let urlError = clientError.underlyingError as? URLError, urlError.code == .notConnectedToInternet
-            {
-                throw NetworkError.noInternet
-            } else {
-                throw NetworkError.apiError
-            }
+            throw NetworkErrorMapper.map(error)
         }
     }
     

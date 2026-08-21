@@ -12,8 +12,6 @@ struct CarrierView: View {
     
     init(viewModel: CarrierViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
-        
-        viewModel.fetchCarrierInfo()
     }
     
     var body: some View {
@@ -40,6 +38,8 @@ struct CarrierView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(.ypWhite)
             }
+        }.task {
+            await viewModel.fetchCarrierInfo()
         }
     }
     

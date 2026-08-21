@@ -8,6 +8,7 @@
 import SwiftUI
 import WebKit
 
+@MainActor
 final class UserAgreementViewModel {
     
     // MARK: - Public properties

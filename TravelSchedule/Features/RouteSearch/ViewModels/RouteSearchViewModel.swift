@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+@MainActor
 final class RouteSearchViewModel: ObservableObject {
     // MARK: - Public properties
     @Published var departureStation: Station?

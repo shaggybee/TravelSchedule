@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+@MainActor
 final class StoriesViewModel: ObservableObject {
     // MARK: - Public properties
     @Published private(set) var currentStoryIndex: Int
